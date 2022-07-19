@@ -1,748 +1,438 @@
-  local Lib = {}
- 
-local Wap = Instance.new("ScreenGui")
-local MainUI = Instance.new("ImageLabel")
-local CatList = Instance.new("ImageLabel")
-local details = Instance.new("Frame")
-local Name = Instance.new("TextLabel")
-local Carno1 = Instance.new("TextLabel")
-local fix = Instance.new("Frame")
-local Logo = Instance.new("ImageLabel")
-local UIListLayout = Instance.new("UIListLayout")
-local UIPadding = Instance.new("UIPadding")
-local CatFrame = Instance.new("ImageButton")
-local CatText = Instance.new("TextLabel")
-local Fix1 = Instance.new("Frame")
-local Categories = Instance.new("Frame")
- 
-Wap.Name = "Wap"
-Wap.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-Wap.ResetOnSpawn = false
- 
-MainUI.Name = "MainUI"
-MainUI.Parent = Wap
-MainUI.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MainUI.BackgroundTransparency = 1.000
-MainUI.Position = UDim2.new(0.275138855, 0, 0.147420153, 0)
-MainUI.Size = UDim2.new(0, 784, 0, 545)
-MainUI.Image = "rbxassetid://3570695787"
-MainUI.ImageColor3 = Color3.fromRGB(35, 35, 42)
-MainUI.ScaleType = Enum.ScaleType.Slice
-MainUI.SliceCenter = Rect.new(100, 100, 100, 100)
-MainUI.SliceScale = 0.120
-local dragger = {};
-local mouse        = game:GetService("Players").LocalPlayer:GetMouse();
-local inputService = game:GetService('UserInputService');
-local heartbeat    = game:GetService("RunService").Heartbeat;
--- // credits to Ririchi / Inori for this cute drag function :)
-function dragger.new(frame)
-	local s, event = pcall(function()
-		return frame.MouseEnter
-	end)
- 
-	if s then
-		frame.Active = true;
- 
-		event:connect(function()
-			local input = frame.InputBegan:connect(function(key)
-				if key.UserInputType == Enum.UserInputType.MouseButton1 then
-					local objectPosition = Vector2.new(mouse.X - MainUI .AbsolutePosition.X, mouse.Y - MainUI .AbsolutePosition.Y);
-					while heartbeat:wait() and inputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
-						pcall(function()
-							MainUI :TweenPosition(UDim2.new(0, mouse.X - objectPosition.X, 0, mouse.Y - objectPosition.Y), 'Out', 'Linear', 0.1, true);
-						end)
-					end
-				end
-			end)
- 
-			local leave;
-			leave = frame.MouseLeave:connect(function()
-				input:disconnect();
-				leave:disconnect();
-			end)
-		end)
-	end
-end
-dragger.new(MainUI)
-local toggledpog = true
-local pos = UDim2.new(0.275,0,0.147,0)
-game:GetService('UserInputService').InputBegan:connect(function(key, gpe)
-	if (not gpe) then
-		if key.KeyCode == Enum.KeyCode.RightShift then
-			toggledpog = not toggledpog;
-			if toggledpog then
-				pos = MainUI.Position
-				MainUI:TweenPosition(UDim2.new(0.5,0,2,0), (toggledpog and 'Out' or 'In'), 'Quad', 0.15, true)
-				wait();
-			else
-				MainUI:TweenPosition(pos, (toggledpog and 'Out' or 'In'), 'Quad', 0.15, true)
-			end
-		end
-	end
-end)
-CatList.Name = "CatList"
-CatList.Parent = MainUI
-CatList.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-CatList.BackgroundTransparency = 1.000
-CatList.Position = UDim2.new(-0.000204514479, 0, 0, 0)
-CatList.Size = UDim2.new(0, 197, 0, 545)
-CatList.Image = "rbxassetid://3570695787"
-CatList.ImageColor3 = Color3.fromRGB(52, 52, 63)
-CatList.ScaleType = Enum.ScaleType.Slice
-CatList.SliceCenter = Rect.new(100, 100, 100, 100)
-CatList.SliceScale = 0.120
- 
-details.Name = "details"
-details.Parent = CatList
-details.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-details.BackgroundTransparency = 1.000
-details.Size = UDim2.new(0, 196, 0, 74)
- 
-Name.Name = "Name"
-Name.Parent = details
-Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Name.BackgroundTransparency = 1.000
-Name.Position = UDim2.new(0, 58, 0, -4)
-Name.Size = UDim2.new(0, 109, 0, 41)
-Name.Font = Enum.Font.GothamBlack
-Name.Text = "   Name Here"
-Name.TextColor3 = Color3.fromRGB(255, 255, 255)
-Name.TextSize = 14.000
-Name.TextWrapped = true
-Name.TextXAlignment = Enum.TextXAlignment.Left
- 
-Carno1.Name = "Carno1"
-Carno1.Parent = details
-Carno1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Carno1.BackgroundTransparency = 1.000
-Carno1.Position = UDim2.new(0, 69, 0, 27)
-Carno1.Size = UDim2.new(0, 87, 0, 22)
-Carno1.Font = Enum.Font.Code
-Carno1.Text = "V.G Hub"
-Carno1.TextColor3 = Color3.fromRGB(97, 97, 97)
-Carno1.TextScaled = true
-Carno1.TextSize = 14.000
-Carno1.TextWrapped = true
-Carno1.TextXAlignment = Enum.TextXAlignment.Left
-spawn(function()
-while wait(2) do
-	local text = "   "..game.Players.LocalPlayer.Name
-	for i = 1,#text,1 do
-		Name.Text = string.sub(text,1,i)
-		wait(0.08)
-	end
-end end)
-fix.Name = "fix"
-fix.Parent = details
-fix.BackgroundColor3 = Color3.fromRGB(52, 52, 63)
-fix.BorderSizePixel = 0
-fix.Position = UDim2.new(0.862244904, 0, -0.0675675869, 0)
-fix.Size = UDim2.new(0, 28, 0, 48)
- 
-Logo.Name = "Logo"
-Logo.Parent = details
-Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Logo.BackgroundTransparency = 1.000
-Logo.Position = UDim2.new(0, 0, 0.0458715595, 0)
-Logo.Size = UDim2.new(0, 50, 0, 50)
+if getgenv().Aiming then return getgenv().Aiming end
+
+-- // Services
 local Players = game:GetService("Players")
- 
-local player = Players.LocalPlayer
- 
--- Fetch the thumbnail
-local userId = player.UserId
-local thumbType = Enum.ThumbnailType.HeadShot
-local thumbSize = Enum.ThumbnailSize.Size48x48
-local content, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
- 
-Logo.Image = content
- 
-UIListLayout.Parent = CatList
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 5)
- 
-UIPadding.Parent = CatList
-UIPadding.PaddingBottom = UDim.new(0, 5)
-UIPadding.PaddingTop = UDim.new(0, 5)
-CatFrame.Name = "CatFrame"
-CatFrame.Parent = MainUI
-CatFrame.BackgroundColor3 = Color3.fromRGB(0, 170, 127)
-CatFrame.BackgroundTransparency = 1.000
-CatFrame.Position = UDim2.new(0.249844611, 0, 0, 0)
-CatFrame.Size = UDim2.new(0, 588, 0, 48)
-CatFrame.Image = "rbxassetid://2790389767"
-CatFrame.ImageColor3 = Color3.fromRGB(0, 170, 127)
-CatFrame.ScaleType = Enum.ScaleType.Slice
-CatFrame.SliceCenter = Rect.new(8, 8, 248, 248)
- 
-CatText.Name = "CatText"
-CatText.Parent = CatFrame
-CatText.AnchorPoint = Vector2.new(0.5, 0.5)
-CatText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-CatText.BackgroundTransparency = 1.000
-CatText.BorderSizePixel = 0
-CatText.Position = UDim2.new(0.5, 0, 0.5, 0)
-CatText.Size = UDim2.new(1, 0, 1, 0)
-CatText.Font = Enum.Font.GothamSemibold
-CatText.Text = "Select Tab"
-CatText.TextColor3 = Color3.fromRGB(255, 255, 255)
-CatText.TextSize = 14.000
- 
-Fix1.Name = "Fix1"
-Fix1.Parent = CatFrame
-Fix1.BackgroundColor3 = Color3.fromRGB(0, 170, 127)
-Fix1.BorderSizePixel = 0
-Fix1.Size = UDim2.new(0, 12, 0, 48)
- 
-Categories.Name = "Categories"
-Categories.Parent = MainUI
-Categories.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Categories.BackgroundTransparency = 1.000
-Categories.ClipsDescendants = true
-Categories.Position = UDim2.new(0.25, 0, 0.0880733952, 0)
-Categories.Size = UDim2.new(0, 588, 0, 496)
-function Lib:Category(name)
-	local Main = Instance.new("TextButton")
-	local Omegalul = Instance.new("ImageLabel")
-	local Main_2 = Instance.new("TextLabel")
-	local Main_3 = Instance.new("ScrollingFrame")
-	local UIListLayout_2 = Instance.new("UIListLayout")
-	local UIPadding_2 = Instance.new("UIPadding")
-	Main.Name = name
-	Main.Parent = CatList
-	Main.Active = false
-	Main.AnchorPoint = Vector2.new(0.5, 0.5)
-	Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Main.BackgroundTransparency = 1.000
-	Main.BorderSizePixel = 0
-	Main.Position = UDim2.new(0.487309635, 0, 0.190887704, 0)
-	Main.Selectable = false
-	Main.Size = UDim2.new(1, -5, 0.1193901, -5)
-	Main.Font = Enum.Font.GothamSemibold
-	Main.Text = name
-	Main.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Main.TextSize = 14.000
- 
-	Omegalul.Name = "Omegalul"
-	Omegalul.Parent = Main
-	Omegalul.AnchorPoint = Vector2.new(0.5, 0.5)
-	Omegalul.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Omegalul.BackgroundTransparency = 1.000
-	Omegalul.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Omegalul.Size = UDim2.new(1, -8, 1, -8)
-	Omegalul.Image = "rbxassetid://3570695787"
-	Omegalul.ImageColor3 = Color3.fromRGB(52, 52, 63)
-	Omegalul.ScaleType = Enum.ScaleType.Slice
-	Omegalul.SliceCenter = Rect.new(100, 100, 100, 100)
-	Omegalul.SliceScale = 0.120
- 
-	Main_2.Name = name
-	Main_2.Parent = Omegalul
-	Main_2.AnchorPoint = Vector2.new(0.5, 0.5)
-	Main_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Main_2.BackgroundTransparency = 1.000
-	Main_2.BorderSizePixel = 0
-	Main_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Main_2.Size = UDim2.new(1, 0, 1, 0)
-	Main_2.Font = Enum.Font.GothamSemibold
-	Main_2.Text = name
-	Main_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-	Main_2.TextSize = 14.000
- 
-	Main_3.Name = name
-	Main_3.Parent = Categories
-	Main_3.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
-	Main_3.BorderSizePixel = 0
-	Main_3.Selectable = false
-	Main_3.Visible = false
-	Main_3.Size = UDim2.new(0.976190448, 0, 1, 0)
-	Main_3.CanvasSize = UDim2.new(0, 0, 0, 0)
-	Main_3.ScrollBarThickness = 6
- 
-	UIListLayout_2.Parent = Main_3
-	UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout_2.Padding = UDim.new(0, 4)
- 
-	UIPadding_2.Parent = Main_3
-	UIPadding_2.PaddingLeft = UDim.new(0, 8)
-	UIPadding_2.PaddingTop = UDim.new(0, 16)
-	local cat = {}
-	function cat:Slider(name,min,def,max,callback)
-		callback = callback or function() end
-		local SliderD = Instance.new("ImageLabel")
-		local Title = Instance.new("TextLabel")
-		local Slider = Instance.new("TextButton")
-		local UICorner = Instance.new("UICorner")
-		local Inner = Instance.new("TextButton")
-		local UICorner_2 = Instance.new("UICorner")
-		SliderD.Name = "SliderD"
-		SliderD.Parent = Main_3
-		SliderD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		SliderD.BackgroundTransparency = 1.000
-		SliderD.Position = UDim2.new(0.0139372824, 0, 0.0161290932, 0)
-		SliderD.Size = UDim2.new(1, -16, 0, 45)
-		SliderD.Image = "rbxassetid://3570695787"
-		SliderD.ImageColor3 = Color3.fromRGB(25, 25, 25)
-		SliderD.ScaleType = Enum.ScaleType.Slice
-		SliderD.SliceCenter = Rect.new(100, 100, 100, 100)
-		SliderD.SliceScale = 0.120
- 
-		Title.Name = "Title"
-		Title.Parent = SliderD
-		Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Title.BackgroundTransparency = 1.000
-		Title.Position = UDim2.new(0, 0, 0.0402777791, 0)
-		Title.Size = UDim2.new(0, 182, 0, 43)
-		Title.Font = Enum.Font.GothamBlack
-		Title.Text = "  "..name
-		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Title.TextSize = 14.000
-		Title.TextXAlignment = Enum.TextXAlignment.Left
- 
-		Slider.Name = "Slider"
-		Slider.Parent = SliderD
-		Slider.Active = false
-		Slider.AnchorPoint = Vector2.new(0, 0.5)
-		Slider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-		Slider.BorderSizePixel = 0
-		Slider.Position = UDim2.new(0.361999959, 0, 0.5, 0)
-		Slider.Selectable = false
-		Slider.Size = UDim2.new(0, 334, 0, 28)
-		Slider.AutoButtonColor = false
-		Slider.Text = ""
- 
-		UICorner.Parent = Slider
- 
-		Inner.Name = "Inner"
-		Inner.Parent = Slider
-		Inner.Active = false
-		Inner.AnchorPoint = Vector2.new(0, 0.5)
-		Inner.BackgroundColor3 = Color3.fromRGB(206, 206, 206)
-		Inner.BorderSizePixel = 0
-		Inner.Position = UDim2.new(0, 0, 0.5, 0)
-		Inner.Selectable = false
-		Inner.Size = UDim2.new(0, 0, 0, 28)
-		Inner.AutoButtonColor = false
-		Inner.Text = ""
- 
-		UICorner_2.Parent = Inner
-		local script = Instance.new('LocalScript', SliderD)
- 
-		local default = 20
-		local min = 16
-		local max = 200
-		local Inner = script.Parent.Slider.Inner
-		local BG = Inner.Parent
-		local old = script.Parent.Title.Text
-		local Number = script.Parent.Title
-		local mouse = game.Players.LocalPlayer:GetMouse()
-		local uis = game:GetService("UserInputService")
-		local Value;
-		local down = false
-		if default ~= min then
-			game:GetService("TweenService"):Create(Inner, TweenInfo.new(0.05), {Size = UDim2.new(default/max, 0, 0, 28)}):Play()
-			Number.Text = old.. ": "..default       
-		end
-		local function Activate()
-			spawn(function()
-				down = true
-				Value = math.floor((((tonumber(max) - tonumber(min)) / 336) * Inner.AbsoluteSize.X) +tonumber(min)) or 0
-				pcall(function()
-					callback(Value)
-				end)
-				Number.Text = old.. ": "..Value    
-				game:GetService("TweenService"):Create(Inner, TweenInfo.new(0.05), {Size = UDim2.new(0, math.clamp(mouse.X - Inner.AbsolutePosition.X, 0, 336), 0, 28)}):Play()
- 
-				while game:GetService("RunService").RenderStepped:wait() and down do
-					Value = math.floor((((tonumber(max) - tonumber(min)) / 336) * Inner.AbsoluteSize.X) +tonumber(min)) or 0
-					Number.Text = old.. ": "..Value               
-					pcall(function()
-						callback(Value)
-					end)
-					game:GetService("TweenService"):Create(Inner, TweenInfo.new(0.05), {Size = UDim2.new(0, math.clamp(mouse.X - Inner.AbsolutePosition.X, 0, 336), 0, 28)}):Play()
-				end
-			end)
-		end
-		Inner.MouseButton1Down:Connect(function()
-			Activate()
-		end)
-		BG.MouseButton1Down:Connect(function()
-			Activate()
-		end)
-		uis.InputEnded:connect(function(key)
-			if key.UserInputType == Enum.UserInputType.MouseButton1 and down then
-				down = false
-				Value = math.floor((((tonumber(max) - tonumber(min)) / 336) * Inner.AbsoluteSize.X) +tonumber(min)) or 0
-				Number.Text = old.. ": "..Value      
-				pcall(function()
-					callback(Value)
-				end)
-				game:GetService("TweenService"):Create(Inner, TweenInfo.new(0.05), {Size = UDim2.new(0, math.clamp(mouse.X - Inner.AbsolutePosition.X, 0, 336), 0, 28)}):Play()
-			end        
-		end)
-		Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,49)
-	end
-	function cat:Label(name)
-		local LabelD = Instance.new("ImageLabel")
-		local LabelText = Instance.new("TextLabel")
- 
-		LabelD.Name = "LabelD"
-		LabelD.Parent = Main_3
-		LabelD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		LabelD.BackgroundTransparency = 1.000
-		LabelD.Position = UDim2.new(0.0139372824, 0, 0.15927425, 0)
-		LabelD.Size = UDim2.new(1, -16, 0, 45)
-		LabelD.Image = "rbxassetid://3570695787"
-		LabelD.ImageColor3 = Color3.fromRGB(35, 35, 42)
-		LabelD.ScaleType = Enum.ScaleType.Slice
-		LabelD.SliceCenter = Rect.new(100, 100, 100, 100)
-		LabelD.SliceScale = 0.120
- 
-		LabelText.Name = "LabelText"
-		LabelText.Text = name
-		LabelText.Parent = LabelD
-		LabelText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		LabelText.BackgroundTransparency = 1.000
-		LabelText.Size = UDim2.new(1, 0, 1, 0)
-		LabelText.Font = Enum.Font.GothamBlack
-		LabelText.TextColor3 = Color3.fromRGB(255, 255, 255)
-		LabelText.TextSize = 14.000
-		Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,49)
-	end
-	function cat:Toggle(name,callback)
-		callback = callback or function() end
-		local ToggleD = Instance.new("ImageButton")
-		local Toggle = Instance.new("ImageLabel")
-		local Frame = Instance.new("Frame")
-		local UICorner_3 = Instance.new("UICorner")
-		local Title_2 = Instance.new("TextLabel")
- 
-		ToggleD.Name = "ToggleD"
-		ToggleD.Parent = Main_3
-		ToggleD.Active = false
-		ToggleD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ToggleD.BackgroundTransparency = 1.000
-		ToggleD.Position = UDim2.new(0.0139372824, 0, 0.15927425, 0)
-		ToggleD.Selectable = false
-		ToggleD.Size = UDim2.new(1, -16, 0, 45)
-		ToggleD.Image = "rbxassetid://3570695787"
-		ToggleD.ImageColor3 = Color3.fromRGB(25, 25, 25)
-		ToggleD.ScaleType = Enum.ScaleType.Slice
-		ToggleD.SliceCenter = Rect.new(100, 100, 100, 100)
-		ToggleD.SliceScale = 0.120
- 
-		Toggle.Name = "Toggle"
-		Toggle.Parent = ToggleD
-		Toggle.AnchorPoint = Vector2.new(0, 0.5)
-		Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Toggle.BackgroundTransparency = 1.000
-		Toggle.Position = UDim2.new(0.850000024, 0, 0.5, 0)
-		Toggle.Size = UDim2.new(0, 65, 0.600000024, 0)
-		Toggle.Image = "rbxassetid://3570695787"
-		Toggle.ImageColor3 = Color3.fromRGB(45, 45, 45)
-		Toggle.ScaleType = Enum.ScaleType.Slice
-		Toggle.SliceCenter = Rect.new(100, 100, 100, 100)
-		Toggle.SliceScale = 0.080
- 
-		Frame.Parent = Toggle
-		Frame.BackgroundColor3 = Color3.fromRGB(206, 206, 206)
-		Frame.Size = UDim2.new(0.5, 0, 1, 0)
- 
-		UICorner_3.Parent = Frame
- 
-		Title_2.Name = "Title"
-		Title_2.Parent = ToggleD
-		Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Title_2.BackgroundTransparency = 1.000
-		Title_2.Position = UDim2.new(0, 0, 0.0402777791, 0)
-		Title_2.Size = UDim2.new(0, 182, 0, 43)
-		Title_2.Font = Enum.Font.GothamBlack
-		Title_2.Text = "  "..name
-		Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Title_2.TextSize = 14.000
-		Title_2.TextXAlignment = Enum.TextXAlignment.Left
-		local script = Instance.new('LocalScript', ToggleD)
- 
-		local togged = false
-		script.Parent.MouseButton1Click:Connect(function()
-			if togged == false then
-				togged = true
-				game.TweenService:Create(script.Parent.Toggle.Frame, TweenInfo.new(0.3), {Position = UDim2.new(0.5,0,0, 0)}):Play()
-			else
-				togged = false
-				game.TweenService:Create(script.Parent.Toggle.Frame, TweenInfo.new(0.3), {Position = UDim2.new(0,0,0, 0)}):Play()
-			end
-			callback(togged)
-		end)
-		Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,49)
-	end
-	function cat:Button(name,callback)
-		callback = callback or function()end
-		local ButtonD = Instance.new("ImageButton")
-		local ButtonText = Instance.new("TextButton")
- 
-		ButtonD.Name = "ButtonD"
-		ButtonD.Parent = Main_3
-		ButtonD.Active = false
-		ButtonD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ButtonD.BackgroundTransparency = 1.000
-		ButtonD.Position = UDim2.new(0.0139372824, 0, 0.15927425, 0)
-		ButtonD.Selectable = false
-		ButtonD.Size = UDim2.new(1, -16, 0, 45)
-		ButtonD.Image = "rbxassetid://3570695787"
-		ButtonD.ImageColor3 = Color3.fromRGB(25, 25, 25)
-		ButtonD.ScaleType = Enum.ScaleType.Slice
-		ButtonD.SliceCenter = Rect.new(100, 100, 100, 100)
-		ButtonD.SliceScale = 0.120
- 
-		ButtonText.Name = "ButtonText"
-		ButtonText.Parent = ButtonD
-		ButtonText.Text = name
-		ButtonText.Active = false
-		ButtonText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ButtonText.BackgroundTransparency = 1.000
-		ButtonText.Selectable = false
-		ButtonText.Size = UDim2.new(1, 0, 1, 0)
-		ButtonText.AutoButtonColor = false
-		ButtonText.Font = Enum.Font.GothamBlack
-		ButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
-		ButtonText.TextSize = 14.000
-		local script = Instance.new('LocalScript', ButtonD)
- 
-		m=game.Players.LocalPlayer:GetMouse()
-		local function CircleClick(Button, X, Y)
-			coroutine.resume(coroutine.create(function()
-				Button.ClipsDescendants = true
-				local Circle = Instance.new("ImageLabel")
-				local UICorner_34 = Instance.new("UICorner")
-				Circle.Name = "Circle"
-				Circle.Parent = Button
-				Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				Circle.BackgroundTransparency = 1.000
-				Circle.ZIndex = 10
-				Circle.Image = "rbxassetid://266543268"
-				Circle.ImageColor3 = Color3.fromRGB(0, 0, 0)
-				Circle.ImageTransparency = 0.500
- 
-				UICorner_34.CornerRadius = UDim.new(0, 6)
-				UICorner_34.Parent = Circle
-				local NewX = X - Circle.AbsolutePosition.X
-				local NewY = Y - Circle.AbsolutePosition.Y
-				Circle.Position = UDim2.new(0, NewX, 0, NewY)
-				local Size = 0
-				if Button.AbsoluteSize.X > Button.AbsoluteSize.Y then
-					Size = Button.AbsoluteSize.X
-				elseif Button.AbsoluteSize.X < Button.AbsoluteSize.Y then
-					Size = Button.AbsoluteSize.Y
-				elseif Button.AbsoluteSize.X == Button.AbsoluteSize.Y then                                                                                                                                                                                                                                                                                                                      print("This place uses a model by Come0n.") --please do not remove!
-					Size = Button.AbsoluteSize.X
-				end
-				local Time = 0.5
-				Circle:TweenSizeAndPosition(UDim2.new(0, Size, 0, Size), UDim2.new(0.5, -Size/2, 0.5, -Size/2), "Out", "Quad", Time, false, nil)
-				for i=1,10 do
-					Circle.ImageTransparency = Circle.ImageTransparency + 0.035
-					wait(Time/10)
-				end
-				Circle:Destroy()
-			end))
-		end
-		script.Parent.ButtonText.MouseButton1Click:Connect(function()
-			CircleClick(script.Parent,m.X,m.Y)
-			callback()
-		end)
-		Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,49)
-	end
-	function cat:Dropdown(name,tabl,callback)
-		callback=callback or function()end
-		local DropdownD = Instance.new("ImageButton")
-		local TextLabel = Instance.new("TextLabel")
-		local Drop = Instance.new("Frame")
-		local UICorner_4 = Instance.new("UICorner")
-		local Scroll = Instance.new("ScrollingFrame")
-		local UIListLayout_3 = Instance.new("UIListLayout")
-		local UIPadding_3 = Instance.new("UIPadding")
-		local Mini = Instance.new("ImageButton")
- 
-		DropdownD.Name = "DropdownD"
-		DropdownD.Parent = Main_3
-		DropdownD.Active = false
-		DropdownD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		DropdownD.BackgroundTransparency = 1.000
-		DropdownD.Position = UDim2.new(0.264030606, 0, 0.332110077, 0)
-		DropdownD.Selectable = false
-		DropdownD.Size = UDim2.new(1, -16, 0, 45)
-		DropdownD.Image = "rbxassetid://3570695787"
-		DropdownD.ImageColor3 = Color3.fromRGB(25, 25, 25)
-		DropdownD.ScaleType = Enum.ScaleType.Slice
-		DropdownD.SliceCenter = Rect.new(100, 100, 100, 100)
-		DropdownD.SliceScale = 0.120
- 
-		TextLabel.Parent = DropdownD
-		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		TextLabel.BackgroundTransparency = 1.000
-		TextLabel.Size = UDim2.new(0, 182, 0, 43)
-		TextLabel.Font = Enum.Font.GothamBlack
-		TextLabel.Text = "  "..name
-		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-		TextLabel.TextSize = 14.000
-		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
- 
-		Drop.Name = "Drop"
-		Drop.Parent = DropdownD
-		Drop.BackgroundColor3 = Color3.fromRGB(15, 14, 15)
-		Drop.BorderSizePixel = 0
-		Drop.ClipsDescendants = true
-		Drop.Position = UDim2.new(0, 0, 1, 0)
-		Drop.Size = UDim2.new(1, 0, 0, 0)
-		Drop.ZIndex = 20
- 
-		UICorner_4.CornerRadius = UDim.new(0, 6)
-		UICorner_4.Parent = Drop
- 
-		Scroll.Name = "Scroll"
-		Scroll.Parent = Drop
-		Scroll.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Scroll.BackgroundTransparency = 1.000
-		Scroll.BorderSizePixel = 0
-		Scroll.Selectable = false
-		Scroll.Size = UDim2.new(1, 0, 1, 0)
-		Scroll.ZIndex = 21
-		Scroll.CanvasSize = UDim2.new(0, 0, 0, 2)
-		Scroll.ScrollBarThickness = 6
- 
-		UIListLayout_3.Parent = Scroll
-		UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_3.Padding = UDim.new(0, 2)
- 
-		UIPadding_3.Parent = Scroll
-		UIPadding_3.PaddingTop = UDim.new(0, 2)
-		for i,v in pairs(tabl) do
-			local Button = Instance.new("TextButton")
-			local UICorner_5 = Instance.new("UICorner")
-		Button.Name = "Button"
-		Button.Parent = Scroll
-		Button.BackgroundColor3 = Color3.fromRGB(25, 24, 25)
-		Button.BorderSizePixel = 0
-		Button.Position = UDim2.new(0, 0, 0.208999932, 0)
-		Button.Size = UDim2.new(1, -12, 0, 32)
-		Button.ZIndex = 22
-		Button.AutoButtonColor = false
-		Button.Font = Enum.Font.ArialBold
-Button.Text = v
-		Button.TextColor3 = Color3.fromRGB(230, 230, 230)
-		Button.TextSize = 12.000
- 
-		UICorner_5.CornerRadius = UDim.new(0, 6)
-			UICorner_5.Parent = Button
-			Scroll.CanvasSize = Scroll.CanvasSize + UDim2.new(0,0,0,34)
-		end
-		Mini.Name = "Mini"
-		Mini.Parent = DropdownD
-		Mini.Active = false
-		Mini.AnchorPoint = Vector2.new(0, 0.5)
-		Mini.BackgroundTransparency = 1.000
-		Mini.Position = UDim2.new(0.925000012, 0, 0.5, 0)
-		Mini.Selectable = false
-		Mini.Size = UDim2.new(0, 32, 0, 32)
-		Mini.ZIndex = 6
-		Mini.Image = "rbxassetid://4370337241"
-		Mini.ImageColor3 = Color3.fromRGB(230, 230, 230)
-		Mini.ScaleType = Enum.ScaleType.Fit
-		local script = Instance.new('LocalScript', DropdownD)
- 
- 
-		local cooldown = false 
-		local ena = false
- 
-		local def = script.Parent.TextLabel.Text
-		local old = script.Parent.TextLabel.Text
-		script.Parent.MouseButton1Click:Connect(function()
-			if ena == false then
-				ena = true
-				old = script.Parent.TextLabel.Text
-				game.TweenService:Create(script.Parent.Mini, TweenInfo.new(0.3), {Rotation = -90}):Play()
-				game.TweenService:Create(script.Parent.Drop, TweenInfo.new(0.3), {Size = UDim2.new(1, 0,0, 106)}):Play()
-				Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,106)
-				script.Parent.TextLabel.Text = "  ..."
-				for i,v in pairs(script.Parent.Drop.Scroll:GetChildren()) do
-					if v:IsA("TextButton") then
-						v.MouseButton1Click:Connect(function()
-							ena = false
-							game.TweenService:Create(script.Parent.Mini, TweenInfo.new(0.3), {Rotation = 0}):Play()
-							game.TweenService:Create(script.Parent.Drop, TweenInfo.new(0.3), {Size = UDim2.new(1, 0,0, 0)}):Play()
-							Main_3.CanvasSize = Main_3.CanvasSize - UDim2.new(0,0,0,106)
-							callback(v.Text)
-							script.Parent.TextLabel.Text = def..": "..v.Text
-							cooldown = false 
- 
- 
- 
-						end)
-					end
-				end
-			else
-				ena = false
-				game.TweenService:Create(script.Parent.Mini, TweenInfo.new(0.3), {Rotation = 0}):Play()
-				game.TweenService:Create(script.Parent.Drop, TweenInfo.new(0.3), {Size = UDim2.new(1, 0,0, 0)}):Play()
-				Main_3.CanvasSize = Main_3.CanvasSize - UDim2.new(0,0,0,106)
-				script.Parent.TextLabel.Text = old
-			end
-		end)
-		Main_3.CanvasSize = Main_3.CanvasSize + UDim2.new(0,0,0,49)
-	end
-	return cat;
-end
-function Lib:SetTop(txt)
-	for i1,v1 in pairs(Categories:GetChildren()) do
-		if v1.Name == txt then 
-			for i,v in pairs(CatList:GetChildren()) do
-				if v:IsA("TextButton") then
-					if v1.Name == v.Text then
-						v1.Visible = true
-						game:GetService("TweenService"):Create(v.Omegalul, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(0, 170, 127)}):Play()
-						CatText.Text = txt
-					end
-				end
-			end
-		elseif Categories:FindFirstChild(txt) == nil then error("Error with processing text... Please check for spelling mistakes.")
-		end
-	end
-end
-function Lib:Reload()
-	for i,v in pairs(CatList:GetChildren()) do
-		if v:IsA("TextButton") then
-			v.MouseEnter:Connect(function()
-				for i1,v1 in pairs(Categories:GetChildren()) do
-					if v1.Name ~= v.Text and v1.Visible == false then
-						game:GetService("TweenService"):Create(v.Omegalul, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(170, 170, 255)}):Play()
-					end
-				end
-			end)
-			v.MouseLeave:Connect(function()
-				for i1,v1 in pairs(Categories:GetChildren()) do
-					if v1.Name ~= v.Text and v1.Visible == false then
-						game:GetService("TweenService"):Create(v.Omegalul, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(52, 52, 63)}):Play()
-					end
-				end
-			end)
-			v.MouseButton1Click:Connect(function()
-				for i1,v1 in pairs(Categories:GetChildren()) do
-					v1.Visible = false
-					if v1.Name == v.Text then
-						v1.Visible = true
-						CatText.Text = v1.Name
-					end
-				end
-				for i,v2 in pairs(CatList:GetChildren()) do
-					if v2:IsA("TextButton") then
-						game:GetService("TweenService"):Create(v2.Omegalul, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(52, 52, 63)}):Play()
-					end
-				end
-				game:GetService("TweenService"):Create(v.Omegalul, TweenInfo.new(0.3), {ImageColor3 = Color3.fromRGB(0, 170, 127)}):Play()
-			end)
-		end
-	end
+local Workspace = game:GetService("Workspace")
+local GuiService = game:GetService("GuiService")
+local RunService = game:GetService("RunService")
+
+-- // Vars
+local Heartbeat = RunService.Heartbeat
+local LocalPlayer = Players.LocalPlayer
+local CurrentCamera = Workspace.CurrentCamera
+local Mouse = LocalPlayer:GetMouse()
+
+-- // Optimisation Vars (ugly)
+local Drawingnew = Drawing.new
+local Color3fromRGB = Color3.fromRGB
+local Vector2new = Vector2.new
+local GetGuiInset = GuiService.GetGuiInset
+local Randomnew = Random.new
+local mathfloor = math.floor
+local CharacterAdded = LocalPlayer.CharacterAdded
+local CharacterAddedWait = CharacterAdded.Wait
+local WorldToViewportPoint = CurrentCamera.WorldToViewportPoint
+local RaycastParamsnew = RaycastParams.new
+local EnumRaycastFilterTypeBlacklist = Enum.RaycastFilterType.Blacklist
+local Raycast = Workspace.Raycast
+local GetPlayers = Players.GetPlayers
+local Instancenew = Instance.new
+local IsDescendantOf = Instancenew("Part").IsDescendantOf
+local FindFirstChildWhichIsA = Instancenew("Part").FindFirstChildWhichIsA
+local FindFirstChild = Instancenew("Part").FindFirstChild
+local tableremove = table.remove
+local tableinsert = table.insert
+
+-- // Silent Aim Vars
+getgenv().Aiming = {
+    Enabled = true,
+
+    ShowFOV = false,
+    FOV = 14,
+    FOVSides = 300,
+    FOVColour = Color3fromRGB(255, 0, 0),
+
+    VisibleCheck = true,
+    
+    HitChance = 99,
+
+    Selected = nil,
+    SelectedPart = nil,
+
+    TargetPart = {"Head", "HumanoidRootPart"},
+
+    Ignored = {
+        Teams = {
+            {
+                Team = LocalPlayer.Team,
+                TeamColor = LocalPlayer.TeamColor,
+            },
+        },
+        Players = {
+            LocalPlayer,
+            3254489874
+        }
+    }
+}
+local Aiming = getgenv().Aiming
+
+-- // Create circle
+local circle = Drawingnew("Circle")
+circle.Transparency = 1
+circle.Thickness = 2
+circle.Color = Aiming.FOVColour
+circle.Filled = false
+Aiming.FOVCircle = circle
+
+-- // Update
+function Aiming.UpdateFOV()
+    -- // Make sure the circle exists
+    if not (circle) then
+        return
+    end
+
+    -- // Set Circle Properties
+    circle.Visible = Aiming.ShowFOV
+    circle.Radius = (Aiming.FOV * 3)
+    circle.Position = Vector2new(Mouse.X, Mouse.Y + GetGuiInset(GuiService).Y)
+    circle.NumSides = Aiming.FOVSides
+    circle.Color = Aiming.FOVColour
+
+    -- // Return circle
+    return circle
 end
 
-return Lib;
+-- // Custom Functions
+local CalcChance = function(percentage)
+    -- // Floor the percentage
+    percentage = mathfloor(percentage)
+
+    -- // Get the chance
+    local chance = mathfloor(Randomnew().NextNumber(Randomnew(), 0, 1) * 100) / 100
+
+    -- // Return
+    return chance <= percentage / 100
+end
+
+-- // Customisable Checking Functions: Is a part visible
+function Aiming.IsPartVisible(Part, PartDescendant)
+    -- // Vars
+    local Character = LocalPlayer.Character or CharacterAddedWait(CharacterAdded)
+    local Origin = CurrentCamera.CFrame.Position
+    local _, OnScreen = WorldToViewportPoint(CurrentCamera, Part.Position)
+
+    -- //
+    if (OnScreen) then
+        -- // Vars
+        local raycastParams = RaycastParamsnew()
+        raycastParams.FilterType = EnumRaycastFilterTypeBlacklist
+        raycastParams.FilterDescendantsInstances = {Character, CurrentCamera}
+
+        -- // Cast ray
+        local Result = Raycast(Workspace, Origin, Part.Position - Origin, raycastParams)
+
+        -- // Make sure we get a result
+        if (Result) then
+            -- // Vars
+            local PartHit = Result.Instance
+            local Visible = (not PartHit or IsDescendantOf(PartHit, PartDescendant))
+
+            -- // Return
+            return Visible
+        end
+    end
+
+    -- // Return
+    return false
+end
+
+-- // Ignore player
+function Aiming.IgnorePlayer(Player)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredPlayers = Ignored.Players
+
+    -- // Find player in table
+    for _, IgnoredPlayer in ipairs(IgnoredPlayers) do
+        -- // Make sure player matches
+        if (IgnoredPlayer == Player) then
+            return false
+        end
+    end
+
+    -- // Blacklist player
+    tableinsert(IgnoredPlayers, Player)
+    return true
+end
+
+-- // Unignore Player
+function Aiming.UnIgnorePlayer(Player)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredPlayers = Ignored.Players
+
+    -- // Find player in table
+    for i, IgnoredPlayer in ipairs(IgnoredPlayers) do
+        -- // Make sure player matches
+        if (IgnoredPlayer == Player) then
+            -- // Remove from ignored
+            tableremove(IgnoredPlayers, i)
+            return true
+        end
+    end
+
+    -- //
+    return false
+end
+
+-- // Ignore team
+function Aiming.IgnoreTeam(Team, TeamColor)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredTeams = Ignored.Teams
+
+    -- // Find team in table
+    for _, IgnoredTeam in ipairs(IgnoredTeams) do
+        -- // Make sure team matches
+        if (IgnoredTeam.Team == Team and IgnoredTeam.TeamColor == TeamColor) then
+            return false
+        end
+    end
+
+    -- // Ignore team
+    tableinsert(IgnoredTeams, {Team, TeamColor})
+    return true
+end
+
+-- // Unignore team
+function Aiming.UnIgnoreTeam(Team, TeamColor)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredTeams = Ignored.Teams
+
+    -- // Find team in table
+    for i, IgnoredTeam in ipairs(IgnoredTeams) do
+        -- // Make sure team matches
+        if (IgnoredTeam.Team == Team and IgnoredTeam.TeamColor == TeamColor) then
+            -- // Remove
+            tableremove(IgnoredTeams, i)
+            return true
+        end
+    end
+
+    -- // Return
+    return false
+end
+
+-- //  Toggle team check
+function Aiming.TeamCheck(Toggle)
+    if (Toggle) then
+        return Aiming.IgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
+    end
+
+    return Aiming.UnIgnoreTeam(LocalPlayer.Team, LocalPlayer.TeamColor)
+end
+
+-- // Check teams
+function Aiming.IsIgnoredTeam(Player)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredTeams = Ignored.Teams
+
+    -- // Check if team is ignored
+    for _, IgnoredTeam in ipairs(IgnoredTeams) do
+        -- // Make sure team matches
+        if (Player.Team == IgnoredTeam.Team and Player.TeamColor == IgnoredTeam.TeamColor) then
+            return true
+        end
+    end
+
+    -- // Return
+    return false
+end
+
+-- // Check if player (and team) is ignored
+function Aiming.IsIgnored(Player)
+    -- // Vars
+    local Ignored = Aiming.Ignored
+    local IgnoredPlayers = Ignored.Players
+
+    -- // Loop
+    for _, IgnoredPlayer in ipairs(IgnoredPlayers) do
+        -- // Check if Player Id
+        if (typeof(IgnoredPlayer) == "number" and Player.UserId == IgnoredPlayer) then
+            return true
+        end
+
+        -- // Normal Player Instance
+        if (IgnoredPlayer == Player) then
+            return true
+        end
+    end
+
+    -- // Team check
+    return Aiming.IsIgnoredTeam(Player)
+end
+
+-- // Get the Direction, Normal and Material
+function Aiming.Raycast(Origin, Destination, UnitMultiplier)
+    if (typeof(Origin) == "Vector3" and typeof(Destination) == "Vector3") then
+        -- // Handling
+        if (not UnitMultiplier) then UnitMultiplier = 1 end
+
+        -- // Vars
+        local Direction = (Destination - Origin).Unit * UnitMultiplier
+        local Result = Raycast(Workspace, Origin, Direction)
+
+        -- // Make sure we have a result
+        if (Result) then
+            local Normal = Result.Normal
+            local Material = Result.Material
+
+            return Direction, Normal, Material
+        end
+    end
+
+    -- // Return
+    return nil
+end
+
+-- // Get Character
+function Aiming.Character(Player)
+    return Player.Character
+end
+
+-- // Check Health
+function Aiming.CheckHealth(Player)
+    -- // Get Humanoid
+    local Character = Aiming.Character(Player)
+    local Humanoid = FindFirstChildWhichIsA(Character, "Humanoid")
+
+    -- // Get Health
+    local Health = (Humanoid and Humanoid.Health or 0)
+
+    -- //
+    return Health > 0
+end
+
+-- // Check if silent aim can used
+function Aiming.Check()
+    return (Aiming.Enabled == true and Aiming.Selected ~= LocalPlayer and Aiming.SelectedPart ~= nil)
+end
+Aiming.checkSilentAim = Aiming.Check
+
+-- // Get Closest Target Part
+function Aiming.GetClosestTargetPartToCursor(Character)
+    local TargetParts = Aiming.TargetPart
+
+    -- // Vars
+    local ClosestPart = nil
+    local ClosestPartPosition = nil
+    local ClosestPartOnScreen = false
+    local ClosestPartMagnitudeFromMouse = nil
+    local ShortestDistance = 1/0
+
+    -- //
+    local function CheckTargetPart(TargetPart)
+        -- // Convert string -> Instance
+        if (typeof(TargetPart) == "string") then
+            TargetPart = FindFirstChild(Character, TargetPart)
+        end
+
+        -- // Make sure we have a target
+        if not (TargetPart) then
+            return
+        end
+
+        -- // Get the length between Mouse and Target Part (on screen)
+        local PartPos, onScreen = WorldToViewportPoint(CurrentCamera, TargetPart.Position)
+        local GuiInset = GetGuiInset(GuiService)
+        local Magnitude = (Vector2new(PartPos.X, PartPos.Y - GuiInset.Y) - Vector2new(Mouse.X, Mouse.Y)).Magnitude
+
+        -- //
+        if (Magnitude < ShortestDistance) then
+            ClosestPart = TargetPart
+            ClosestPartPosition = PartPos
+            ClosestPartOnScreen = onScreen
+            ClosestPartMagnitudeFromMouse = Magnitude
+            ShortestDistance = Magnitude
+        end
+    end
+
+    -- // String check
+    if (typeof(TargetParts) == "string") then
+        -- // Check if it all
+        if (TargetParts == "All") then
+            -- // Loop through character children
+            for _, v in ipairs(Character:GetChildren()) do
+                -- // See if it a part
+                if not (v:IsA("BasePart")) then
+                    continue
+                end
+
+                -- // Check it
+                CheckTargetPart(v)
+            end
+        else
+            -- // Individual
+            CheckTargetPart(TargetParts)
+        end
+    end
+
+    -- //
+    if (typeof(TargetParts) == "table") then
+        -- // Loop through all target parts and check them
+        for _, TargetPartName in ipairs(TargetParts) do
+            CheckTargetPart(TargetPartName)
+        end
+    end
+
+    -- //
+    return ClosestPart, ClosestPartPosition, ClosestPartOnScreen, ClosestPartMagnitudeFromMouse
+end
+
+-- // Silent Aim Function
+function Aiming.GetClosestPlayerToCursor()
+    -- // Vars
+    local TargetPart = nil
+    local ClosestPlayer = nil
+    local Chance = CalcChance(Aiming.HitChance)
+    local ShortestDistance = 1/0
+
+    -- // Chance
+    if (not Chance) then
+        Aiming.Selected = LocalPlayer
+        Aiming.SelectedPart = nil
+
+        return LocalPlayer
+    end
+
+    -- // Loop through all players
+    for _, Player in ipairs(GetPlayers(Players)) do
+        -- // Get Character
+        local Character = Aiming.Character(Player)
+
+        -- // Make sure isn't ignored and Character exists
+        if (Aiming.IsIgnored(Player) == false and Character) then
+            -- // Vars
+            local TargetPartTemp, _, _, Magnitude = Aiming.GetClosestTargetPartToCursor(Character)
+
+            -- // Check if part exists and health
+            if (TargetPartTemp and Aiming.CheckHealth(Player)) then
+                -- // Check if is in FOV
+                if (circle.Radius > Magnitude and Magnitude < ShortestDistance) then
+                    -- // Check if Visible
+                    if (Aiming.VisibleCheck and not Aiming.IsPartVisible(TargetPartTemp, Character)) then continue end
+
+                    -- // Set vars
+                    ClosestPlayer = Player
+                    ShortestDistance = Magnitude
+                    TargetPart = TargetPartTemp
+                end
+            end
+        end
+    end
+
+    -- // End
+    Aiming.Selected = ClosestPlayer
+    Aiming.SelectedPart = TargetPart
+end
+
+-- // Heartbeat Function
+Heartbeat:Connect(function()
+    Aiming.UpdateFOV()
+    Aiming.GetClosestPlayerToCursor()
+end)
+
+-- //
+return Aiming
